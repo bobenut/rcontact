@@ -6,6 +6,14 @@ export default class ContactsOpt extends Component {
     addContact: PropTypes.func.isRequired
   }
 
+  static defaultProps = {
+    addContact: () => {}
+  }
+
+  // componentDidMount = () => {
+  //   alert('did mount')
+  // }
+
   render() {
     return (
       <div className="panel-heading" style={{overflow: 'hidden'}}>

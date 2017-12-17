@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 
 export default class TodoItem extends Component {
   static propTypes = {
-    conatct: PropTypes.object.isRequired,
+    contact: PropTypes.object.isRequired,
     editContact: PropTypes.func.isRequired,
     removeContact: PropTypes.func.isRequired
   }
 
   render() {
-    const { conatct, editContact, removeContact } = this.props
+    const { contact, editContact, removeContact } = this.props
 
     return (
       <tr>
@@ -18,7 +18,7 @@ export default class TodoItem extends Component {
               <div>{contact.name}</div>
               <div>{contact.mobilePhone}</div>
           </div>    
-          <div style={{float:right}}>
+          <div style={{float:'right'}}>
               <div>
               <button type='button' className='btn btn-info glyphicon glyphicon-pencil' onClick={editContact(contact)}></button>
               <span> &nbsp;&nbsp;&nbsp;</span>

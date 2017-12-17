@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import contacts from './contacts'
+import contactChunks from './contactChunks'
 
 const rootReducer = combineReducers({
-  contacts
+  contactChunks
 })
 
 export default rootReducer

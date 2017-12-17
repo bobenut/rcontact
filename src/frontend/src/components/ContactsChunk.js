@@ -21,7 +21,7 @@ export default class ContactsList extends Component {
         </thead>
         <tbody>
           {contacts.map(contact =>
-            <ContactsItem key={contact._id} contact={contact} {...actions} />
+            <ContactsItem key={contact._id} contact={contact} {...actions}/>
           )}
         </tbody>
       </table>
