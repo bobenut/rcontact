@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
+// import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as contactsMgrActions from '../actions'
 import ContactsOpt from '../components/ContactsOpt';
 import ContactsList from '../components/ContactsList';
-import { fetchContacts } from '../actions'
-import store from '../store'
+import * as actionThunks from '../thunks'
 
 class ContactsMgr extends Component {
-  constructor(props) {
-		super(props);
-  }
+  // constructor(props) {
+	// 	super(props);
+  // }
   
   static propTypes = {
     contactChunks: PropTypes.object.isRequired
@@ -22,16 +20,19 @@ class ContactsMgr extends Component {
   }
 
   componentDidMount = () => {
-    alert('did mount')
-    store.dispatch(fetchContacts())
+    const { dispatch } = this.props
+    dispatch(actionThunks.fetchContacts())
   }
 
   editContact = (contact) => {
+    // const { dispatch } = this.props
     console.log('do editContact: %s', contact)
   } 
 
   removeContact = (contact) => {
     console.log('do removeContact: %s', contact)
+    const { dispatch } = this.props
+    dispatch(actionThunks.removeContact(contact))
   } 
 
   render() {
@@ -48,7 +49,7 @@ class ContactsMgr extends Component {
         <div className='col-lg-8'>
           <div className='panel panel-default' style={{minWidth:'500px', boxShadow:'4px 4px 10px #888888'}}>
             <ContactsOpt />
-            <ContactsList contactChunks={contactChunks} actions={actions}/>
+            <ContactsList contactChunks={contactChunks} actions={actions} />
             {/* <contactCUDialog /> */}
           </div>
         </div>
@@ -62,9 +63,7 @@ const mapStateToProps = state => ({
   contactChunks: state.contactChunks
 })
 
-const mapDispatchToProps = dispatch => ({
-    actions: bindActionCreators(contactsMgrActions, dispatch)
-})
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(
   mapStateToProps,

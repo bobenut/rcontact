@@ -2,12 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
+import reducer from './reducers'
 import App from './containers/App';
-import store from './store'
 
+const middleware = [ thunk ];
+
+const store = createStore(
+  reducer, 
+  applyMiddleware(...middleware)
+);
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,3 +25,10 @@ ReactDOM.render(
 );
 
 registerServiceWorker();
+
+
+store.subscribe(() => {
+  console.log('+++++++++++++++++++++++++++++++++++++')
+  console.log(store.getState())
+  console.log('-------------------------------------')
+})

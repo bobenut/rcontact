@@ -10,11 +10,14 @@ export default class ContactsList extends Component {
 
   render() {
     const { contactChunks, actions } = this.props
+
     return (
       <div className="panel-body">  
         <div style={{float: 'left',width:'100%'}}>
-          {Object.keys(contactChunks || {}).map(letter => {
-              return <ContactsChunk contactsChunkName={letter} contacts={contactChunks[letter]} actions={actions}/>
+          {Object.keys(contactChunks).map(letter => {
+              if(contactChunks[letter].length > 0) {
+                return <ContactsChunk key={letter} contactsChunkName={letter} contacts={contactChunks[letter]} actions={actions}/>
+              }
             }
           )}
         </div>

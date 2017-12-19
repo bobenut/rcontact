@@ -8,8 +8,16 @@ export default class TodoItem extends Component {
     removeContact: PropTypes.func.isRequired
   }
 
+  handleEditContact = (e) => {
+    this.props.editContact(this.props.contact)
+  }
+
+  handleRemoveContact = (e) => {
+    this.props.removeContact(this.props.contact)
+  }
+
   render() {
-    const { contact, editContact, removeContact } = this.props
+    const { contact } = this.props
 
     return (
       <tr>
@@ -20,9 +28,9 @@ export default class TodoItem extends Component {
           </div>    
           <div style={{float:'right'}}>
               <div>
-              <button type='button' className='btn btn-info glyphicon glyphicon-pencil' onClick={editContact(contact)}></button>
+              <button type='button' className='btn btn-info glyphicon glyphicon-pencil' onClick={this.handleEditContact}></button>
               <span> &nbsp;&nbsp;&nbsp;</span>
-              <button type='button' className='btn btn-danger glyphicon glyphicon-remove' onClick={removeContact(contact)} ></button>
+              <button type='button' className='btn btn-danger glyphicon glyphicon-remove' onClick={this.handleRemoveContact} ></button>
               </div>
           </div>  
         </td>
