@@ -6,38 +6,44 @@ import {
   FETCH_CONTACTS_REQUEST_SUCCESS, 
   FETCH_CONTACTS_REQUEST_FAILURE,
   REMOVE_CONTACT_REQUEST_SUCCESS, 
-  REMOVE_CONTACT_REQUEST_FAILURE 
+  REMOVE_CONTACT_REQUEST_FAILURE,
+  OPEN_CONTACT_CU_DIALOG_AS_NEW,
+  OPEN_CONTACT_CU_DIALOG_AS_EDIT,
+  CLOSE_CONTACT_CU_DIALOG
 } from '../constants/actionTypes'
 
 // import { addContact, removeContacts, editContact, filterContacts } from '../actions'
 
 const initialState = {
-  a: [],
-  b: [],
-  c: [],
-  d: [],
-  e: [],
-  f: [],
-  g: [],
-  h: [],
-  i: [],
-  j: [],
-  k: [],
-  l: [],
-  m: [],
-  n: [],
-  o: [],
-  p: [],
-  q: [],
-  r: [],
-  s: [],
-  t: [],
-  u: [],
-  v: [],
-  w: [],
-  x: [],
-  y: [],
-  z: []
+  isShowContactCUDialog: false,
+  contactChunks: {
+    a: [],
+    b: [],
+    c: [],
+    d: [],
+    e: [],
+    f: [],
+    g: [],
+    h: [],
+    i: [],
+    j: [],
+    k: [],
+    l: [],
+    m: [],
+    n: [],
+    o: [],
+    p: [],
+    q: [],
+    r: [],
+    s: [],
+    t: [],
+    u: [],
+    v: [],
+    w: [],
+    x: [],
+    y: [],
+    z: []
+  }
 }
 
 const reducers = {
@@ -76,14 +82,27 @@ const reducers = {
       contactChunks[c.nameFirstWordChr].push(c)
     }
 
-    return contactChunks
+    return { ...state, contactChunks }
+  },
+  [OPEN_CONTACT_CU_DIALOG_AS_NEW] (state, action) {
+    return { ...state, isShowContactCUDialog: true }
+  },
+  [OPEN_CONTACT_CU_DIALOG_AS_EDIT] (state, action) {
+    return { ...state, isShowContactCUDialog: true }
+  },
+  [CLOSE_CONTACT_CU_DIALOG] (state, action) {
+    return { ...state, isShowContactCUDialog: false }
   }
 }
 
 export default function contacts(state = initialState, action) {
   switch (action.type) {
     case FETCH_CONTACTS_REQUEST_SUCCESS:
-      return reducers[FETCH_CONTACTS_REQUEST_SUCCESS](state, action)
+      return reducers[action.type](state, action)
+    case OPEN_CONTACT_CU_DIALOG_AS_NEW:
+      return reducers[action.type](state, action)
+    case CLOSE_CONTACT_CU_DIALOG:
+      return reducers[action.type](state, action)
     // case EDIT_CONTACT:
     //   return state.map(contact =>
     //     contact.id === action.id ?

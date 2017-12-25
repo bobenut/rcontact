@@ -8,6 +8,9 @@ export const removeContactRequest = removingContact => ({ type: types.REMOVE_CON
 export const removeContactRequestSuccess = removedContact => ({ type: types.REMOVE_CONTACT_REQUEST_SUCCESS, removedContact })
 export const removeContactRequestFailure= error => ({ type: types.REMOVE_CONTACT_REQUEST_FAILURE, error })
 
-export const addContact = text => ({ type: types.ADD_CONTACT, text })
-export const editContact = (id, text) => ({ type: types.EDIT_CONTACT, id, text })
-export const filterContacts = id => ({ type: types.FILTER_CONTACT, id })
+export const openContactCUDialogAsNew = () => ({ type: types.OPEN_CONTACT_CU_DIALOG_AS_NEW })
+export const openContactCUDialogAsEdit = contact => ({ type: types.OPEN_CONTACT_CU_DIALOG_AS_EDIT, contact })
+export const closeContactCUDialog = () => ({ type: types.CLOSE_CONTACT_CU_DIALOG })
+
+// export const editContact = (id, text) => ({ type: types.OPEN_CONTACT_CU_DIALOG, id, text })
+// export const filterContacts = id => ({ type: types.FILTER_CONTACT, id })
