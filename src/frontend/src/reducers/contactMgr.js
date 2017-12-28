@@ -1,12 +1,6 @@
 import {} from '../actions'
 import { 
-  ADD_CONTACT,
-  EDIT_CONTACT, 
-  FILTER_CONTACT, 
   FETCH_CONTACTS_REQUEST_SUCCESS, 
-  FETCH_CONTACTS_REQUEST_FAILURE,
-  REMOVE_CONTACT_REQUEST_SUCCESS, 
-  REMOVE_CONTACT_REQUEST_FAILURE,
   OPEN_CONTACT_CU_DIALOG_AS_NEW,
   OPEN_CONTACT_CU_DIALOG_AS_EDIT,
   CLOSE_CONTACT_CU_DIALOG
@@ -83,7 +77,8 @@ const reducers = {
     }
 
     return { ...state, contactChunks }
-  },
+  }
+  ,
   [OPEN_CONTACT_CU_DIALOG_AS_NEW] (state, action) {
     return { ...state, isShowContactCUDialog: true }
   },
@@ -103,19 +98,6 @@ export default function contacts(state = initialState, action) {
       return reducers[action.type](state, action)
     case CLOSE_CONTACT_CU_DIALOG:
       return reducers[action.type](state, action)
-    // case EDIT_CONTACT:
-    //   return state.map(contact =>
-    //     contact.id === action.id ?
-    //       { ...contact } :
-    //       contact
-    //   )
-
-    // case REMOVE_CONTACTS:
-    //   return state
-
-    // case FILTER_CONTACT:
-    //   return state
-
     default:
       return state
   }

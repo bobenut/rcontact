@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ContactsOpt from '../components/ContactsOpt';
 import ContactsList from '../components/ContactsList';
-import ContactCUDialog from '../components/ContactCUDialog';
 import * as actionThunks from '../thunks'
 
 class ContactsMgr extends Component {
@@ -53,7 +52,6 @@ class ContactsMgr extends Component {
           <div className='panel panel-default' style={{minWidth:'500px', boxShadow:'4px 4px 10px #888888'}}>
             <ContactsOpt />
             <ContactsList contactChunks={contactChunks} actions={actions} />
-            <ContactCUDialog />
           </div>
         </div>
       </div>
@@ -66,7 +64,7 @@ const mapStateToProps = state => ({
   contactChunks: state.contactMgr.contactChunks
 })
 
-const mapDispatchToProps = dispatch => ({})
+// const mapDispatchToProps = dispatch => ({})
 
 export default connect(
   mapStateToProps,

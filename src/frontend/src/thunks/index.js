@@ -51,3 +51,35 @@ export function removeContact(contact) {
     })
   }
 }
+
+export function saveNewContact(contact, success, failed) {
+  return dispatch => {
+    dispatch(actions.saveNewContactRequest(contact))
+
+    return axios({
+      url: '/contact/data',
+      method: 'post',
+      data: { contact: contact },
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }
+    })
+    .then(response => {
+      console.log('save new contact success')
+      // dispatch(actions.saveNewContactRequestSuccess(contact))
+
+      success(contact)
+      
+      //保存成功重新拉取数据
+      fetchContacts()(dispatch)
+
+      
+    })
+    .catch(error => {
+      console.log('save new contact error: %s', error.message)
+      // dispatch(actions.saveNewContactRequestFailure(error))
+
+      failed(error)
+    })
+  }
+}
