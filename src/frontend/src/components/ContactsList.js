@@ -1,17 +1,96 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import Modal from 'antd/lib/modal'
+import Button from 'antd/lib/button'
+import 'antd/lib/modal/style/index.css'
+import 'antd/lib/button/style/index.css'
 import ContactsChunk from './ContactsChunk';
+import ContactForm from './ContactForm'
+import * as actionThunks from '../thunks'
 
-export default class ContactsList extends Component {
+class ContactsList extends Component {
   static propTypes = {
-    contactChunks: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired
+    contactChunks: PropTypes.object.isRequired
+  }
+
+  state = {
+    savingEditedContact: false,
+    editContactModalVisible: false,
+    editContact: null
+  }
+
+  doEditContact = (contact) => {
+    this.setState({ editContact: contact });
+
+    this.openEditContactModal()
+    console.log('do editContact: %s', contact)
+  } 
+
+  doRemoveContact = (contact) => {
+    console.log('do removeContact: %s', contact)
+    const { dispatch } = this.props
+    dispatch(actionThunks.removeContact(contact))
+  } 
+
+  openEditContactModal = () => {
+    this.setState({ editContactModalVisible: true });
+  }
+
+  closeEditContactModal = () => {
+    this.setState({ editContactModalVisible: false });
+  }
+
+  handleSubmitEdittedContact = () => {
+    
+    this.refs.form.validateFields((err, values) => {
+      if(err) {
+        return;
+      }
+
+      this.setState({ savingEditedContact: true });
+
+      this.saveEdittedContact({
+        _id: values._id,
+        name: values.name, 
+        nameFirstWordChr: values.nameFirstWordChr, 
+        nameAllWordChr: values.nameAllWordChr, 
+        corp: values.corp, 
+        mobilePhone: values.mobilePhone,
+        mail: values.mail
+      })
+    });
+  }
+
+  saveEdittedContact = (contact) => {
+    const { dispatch } = this.props
+    dispatch(actionThunks.saveEdittedContact(contact, this.saveEdittedContactSuccessed, this.saveEdittedContactSucce))
+  }
+
+  saveEdittedContactSuccessed = (contact) => {
+    this.setState({ savingEditedContact: false, editContactModalVisible: false });
+  }
+
+  saveEdittedContactSucce = (error) => {
+    
   }
 
   render() {
-    const { contactChunks, actions } = this.props
+    const { contactChunks } = this.props
+
+    const { 
+      editContactModalVisible, 
+      savingEditedContact, 
+      editContact 
+    } = this.state;
+
+    const actions = { 
+      onEditContact: this.doEditContact, 
+      onRemoveContact: this.doRemoveContact 
+    }
 
     return (
+
       <div className="panel-body">  
         <div style={{float: 'left',width:'100%'}}>
           {Object.keys(contactChunks).map(letter => {
@@ -21,7 +100,25 @@ export default class ContactsList extends Component {
             }
           )}
         </div>
+        <Modal 
+          visible={editContactModalVisible}
+          title="Contacts"
+          onOk={this.handleSubmitEdittedContact}
+          onCancel={this.closeEditContactModal}
+          footer={[
+            <Button key="back" onClick={this.closeEditContactModal}>close</Button>,
+            <Button key="submit" type="primary" loading={savingEditedContact} onClick={this.handleSubmitEdittedContact}>
+              save
+            </Button>,
+          ]}>
+          <ContactForm ref="form" contact={editContact}/>
+        </Modal>
       </div>
     )
   }
 }
+
+export default connect(
+  null,
+  null
+)(ContactsList)

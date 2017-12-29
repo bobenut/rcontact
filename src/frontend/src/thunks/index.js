@@ -52,9 +52,15 @@ export function removeContact(contact) {
   }
 }
 
+/**
+ * 向后台提交新增联系人.
+ *
+ * @param {object} contact: 联系人对象.
+ * @param {function} success: 新增成功.
+ * @param {function} failed: 新增失败.
+ */
 export function saveNewContact(contact, success, failed) {
   return dispatch => {
-    dispatch(actions.saveNewContactRequest(contact))
 
     return axios({
       url: '/contact/data',
@@ -66,7 +72,6 @@ export function saveNewContact(contact, success, failed) {
     })
     .then(response => {
       console.log('save new contact success')
-      // dispatch(actions.saveNewContactRequestSuccess(contact))
 
       success(contact)
       
@@ -77,7 +82,42 @@ export function saveNewContact(contact, success, failed) {
     })
     .catch(error => {
       console.log('save new contact error: %s', error.message)
-      // dispatch(actions.saveNewContactRequestFailure(error))
+
+      failed(error)
+    })
+  }
+}
+
+/**
+ * 向后台提交修改过的联系人信息.
+ *
+ * @param {object} contact: 联系人对象.
+ * @param {function} success: 提交修改成功.
+ * @param {function} failed: 提交修改失败.
+ */
+export function saveEdittedContact(contact, success, failed) {
+  return dispatch => {
+
+    return axios({
+      url: '/contact/data',
+      method: 'put',
+      data: { contact: contact },
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      }
+    })
+    .then(response => {
+      console.log('save editted contact success')
+
+      success(contact)
+      
+      //保存成功重新拉取数据
+      fetchContacts()(dispatch)
+
+      
+    })
+    .catch(error => {
+      console.log('save editted contact error: %s', error.message)
 
       failed(error)
     })

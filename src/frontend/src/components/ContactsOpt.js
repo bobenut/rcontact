@@ -73,7 +73,7 @@ class ContactsOpt extends Component {
         <Modal 
           visible={newContactModalVisible}
           title="Contacts"
-          onOk={this.handleSaveNewContact}
+          onOk={this.handleSubmitNewContact}
           onCancel={this.closeNewContactModal}
           footer={[
             <Button key="back" onClick={this.closeNewContactModal}>close</Button>,

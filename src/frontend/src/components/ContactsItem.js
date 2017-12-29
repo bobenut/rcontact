@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 export default class TodoItem extends Component {
   static propTypes = {
     contact: PropTypes.object.isRequired,
-    editContact: PropTypes.func.isRequired,
-    removeContact: PropTypes.func.isRequired
+    onEditContact: PropTypes.func.isRequired,
+    onRemoveContact: PropTypes.func.isRequired
   }
 
   handleEditContact = (e) => {
-    this.props.editContact(this.props.contact)
+    this.props.onEditContact(this.props.contact)
   }
 
   handleRemoveContact = (e) => {
-    this.props.removeContact(this.props.contact)
+    this.props.onRemoveContact(this.props.contact)
   }
 
   render() {
