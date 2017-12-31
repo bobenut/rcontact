@@ -37,7 +37,6 @@ class ContactForm extends Component {
       
       contact._id = contact._id || ''
 
-
       return (
         <Form layout="horizontal">
           <Form.Item

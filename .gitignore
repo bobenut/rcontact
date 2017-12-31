@@ -21,3 +21,13 @@ src/frontend/npm-debug.log
 npm-debug.log
 src/frontend/npm-debug.log
 src/frontend/npm-debug.log
+src/frontend/build
+
+src/backend/node_modules
+src/backend/public
+
+bin/win/db/mongo/data/mongod.lock
+bin/win/db/mongo/data/mongodb.log
+bin/win/db/mongo/data/mongodb.log.*
+
+bin/win/app
