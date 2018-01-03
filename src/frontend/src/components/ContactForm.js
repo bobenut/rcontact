@@ -62,7 +62,7 @@ class ContactForm extends Component {
                 required: true, message: '必须输入!',
               }]
             })(
-              <Input />
+              <Input placeholder="Please input name"/>
             )}
           </Form.Item>
           <Form.Item
@@ -78,7 +78,7 @@ class ContactForm extends Component {
                 required: true, message: '必须输入!',
               }]
             })(
-              <Input />
+              <Input placeholder="Please input first word char of name"/>
             )}
           </Form.Item>
           <Form.Item
@@ -94,7 +94,7 @@ class ContactForm extends Component {
                 required: true, message: '必须输入!',
               }]
             })(
-              <Input />
+              <Input placeholder="Please input name for short"/>
             )}
           </Form.Item>
           <Form.Item
@@ -104,7 +104,7 @@ class ContactForm extends Component {
               initialValue: contact.corp,
               rules: [],
             })(
-              <Input />
+              <Input placeholder="Please input corperation"/>
             )}
           </Form.Item>
           <Form.Item
@@ -120,7 +120,7 @@ class ContactForm extends Component {
                 required: true, message: '必须输入!',
               }]
             })(
-              <Input />
+              <Input placeholder="Please input mobile phone number"/>
             )}
           </Form.Item>
           <Form.Item
@@ -134,7 +134,7 @@ class ContactForm extends Component {
                 required: true, message: '必须输入!',
               }]
             })(
-              <Input />
+              <Input placeholder="Please input mail"/>
             )}
           </Form.Item>
         </Form>

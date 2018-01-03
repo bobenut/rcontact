@@ -26,8 +26,10 @@ export function fetchContacts() {
  * 从后台异步删除联系人信息.
  *
  * @param {object} contact: 联系人对象.
+ * @param {function} success: 删除成功.
+ * @param {function} failed: 删除失败.
  */
-export function removeContact(contact) {
+export function removeContact(contact, success, failed) {
   return dispatch => {
     dispatch(actions.removeContactRequest(contact))
 
@@ -41,13 +43,18 @@ export function removeContact(contact) {
     })
     .then(response => {
       console.log('remove contact success')
-      dispatch(actions.removeContactRequestSuccess(contact))
+      // dispatch(actions.removeContactRequestSuccess(contact))
+
+      success(contact)
+
       //删除成功重新拉取数据
       fetchContacts()(dispatch)
     })
     .catch(error => {
       console.log('remove contact error: %s', error.message)
-      dispatch(actions.removeContactRequestFailure(error))
+      // dispatch(actions.removeContactRequestFailure(error))
+
+      failed(error)
     })
   }
 }

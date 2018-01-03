@@ -1,15 +1,12 @@
 import {} from '../actions'
 import { 
-  FETCH_CONTACTS_REQUEST_SUCCESS, 
-  OPEN_CONTACT_CU_DIALOG_AS_NEW,
-  OPEN_CONTACT_CU_DIALOG_AS_EDIT,
-  CLOSE_CONTACT_CU_DIALOG
+  FETCH_CONTACTS_REQUEST_SUCCESS,
+  FILTER_CONTACTS
 } from '../constants/actionTypes'
 
 // import { addContact, removeContacts, editContact, filterContacts } from '../actions'
 
 const initialState = {
-  isShowContactCUDialog: false,
   contactChunks: {
     a: [],
     b: [],
@@ -37,7 +34,8 @@ const initialState = {
     x: [],
     y: [],
     z: []
-  }
+  },
+  filteredContactChunks: {}
 }
 
 const reducers = {
@@ -76,27 +74,28 @@ const reducers = {
       contactChunks[c.nameFirstWordChr].push(c)
     }
 
-    return { ...state, contactChunks }
-  }
-  ,
-  [OPEN_CONTACT_CU_DIALOG_AS_NEW] (state, action) {
-    return { ...state, isShowContactCUDialog: true }
+    return { ...state, contactChunks, filteredContactChunks: contactChunks }
   },
-  [OPEN_CONTACT_CU_DIALOG_AS_EDIT] (state, action) {
-    return { ...state, isShowContactCUDialog: true }
-  },
-  [CLOSE_CONTACT_CU_DIALOG] (state, action) {
-    return { ...state, isShowContactCUDialog: false }
+  [FILTER_CONTACTS] (state, action) {
+    let filteredContactChunks = {}
+    const searchCondition = action.name
+    if(!searchCondition || searchCondition == '') {
+      return { ...state, filteredContactChunks: state.contactChunks }
+    }
+
+    for (let chunckName in state.contactChunks) {
+      filteredContactChunks[chunckName] = 
+        state.contactChunks[chunckName].filter(contact => contact.name.search(new RegExp(searchCondition, 'i')) >=0 ) || []
+    }
+
+    return { ...state, filteredContactChunks }
   }
 }
 
 export default function contacts(state = initialState, action) {
   switch (action.type) {
     case FETCH_CONTACTS_REQUEST_SUCCESS:
-      return reducers[action.type](state, action)
-    case OPEN_CONTACT_CU_DIALOG_AS_NEW:
-      return reducers[action.type](state, action)
-    case CLOSE_CONTACT_CU_DIALOG:
+    case FILTER_CONTACTS:
       return reducers[action.type](state, action)
     default:
       return state

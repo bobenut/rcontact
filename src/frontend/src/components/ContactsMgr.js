@@ -12,11 +12,11 @@ class ContactsMgr extends Component {
   }
   
   static propTypes = {
-    contactChunks: PropTypes.object.isRequired
+    filteredContactChunks: PropTypes.object.isRequired
   }
 
   static defaultProps = {
-    contactChunks: {}
+    filteredContactChunks: {}
   }
 
   componentDidMount = () => {
@@ -25,7 +25,7 @@ class ContactsMgr extends Component {
   }
 
   render() {
-    const { contactChunks } = this.props
+    const { filteredContactChunks } = this.props
 
     return (
       <div className='container' style={{marginTop:'50px'}}>
@@ -36,7 +36,7 @@ class ContactsMgr extends Component {
         <div className='col-lg-8'>
           <div className='panel panel-default' style={{minWidth:'500px', boxShadow:'4px 4px 10px #888888'}}>
             <ContactsOpt />
-            <ContactsList contactChunks={contactChunks} />
+            <ContactsList contactChunks={filteredContactChunks} />
           </div>
         </div>
       </div>
@@ -46,7 +46,7 @@ class ContactsMgr extends Component {
 }
 
 const mapStateToProps = state => ({
-  contactChunks: state.contactMgr.contactChunks
+  filteredContactChunks: state.contactMgr.filteredContactChunks
 })
 
 // const mapDispatchToProps = dispatch => ({})

@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Modal from 'antd/lib/modal'
 import Button from 'antd/lib/button'
+import message from 'antd/lib/message'
+import 'antd/lib/message/style/index.css'
+
 import 'antd/lib/modal/style/index.css'
 import 'antd/lib/button/style/index.css'
 import ContactsChunk from './ContactsChunk';
@@ -30,8 +33,20 @@ class ContactsList extends Component {
   doRemoveContact = (contact) => {
     console.log('do removeContact: %s', contact)
     const { dispatch } = this.props
-    dispatch(actionThunks.removeContact(contact))
+    dispatch(actionThunks.removeContact(contact, this.removeContactSuccess, this.removeContactFailed))
   } 
+
+  doCancelRemoveContact = (contact) => {
+    message.info('cancel to remove contact.');
+  } 
+
+  removeContactSuccess = (contact) => {
+    message.success('remove contact success.');
+  }
+
+  removeContactFailed = (error) => {
+    message.error('remove contact failed.');
+  }
 
   openEditContactModal = () => {
     this.setState({ editContactModalVisible: true });
@@ -64,15 +79,16 @@ class ContactsList extends Component {
 
   saveEdittedContact = (contact) => {
     const { dispatch } = this.props
-    dispatch(actionThunks.saveEdittedContact(contact, this.saveEdittedContactSuccessed, this.saveEdittedContactSucce))
+    dispatch(actionThunks.saveEdittedContact(contact, this.saveEdittedContactSuccess, this.saveEdittedContactFailed))
   }
 
-  saveEdittedContactSuccessed = (contact) => {
+  saveEdittedContactSuccess = (contact) => {
     this.setState({ savingEditedContact: false, editContactModalVisible: false });
+    message.success('edit contact success.');
   }
 
-  saveEdittedContactSucce = (error) => {
-    
+  saveEdittedContactFailed= (error) => {
+    message.error('remove contact failed: %s', error.message);
   }
 
   render() {
@@ -86,7 +102,8 @@ class ContactsList extends Component {
 
     const actions = { 
       onEditContact: this.doEditContact, 
-      onRemoveContact: this.doRemoveContact 
+      onRemoveContact: this.doRemoveContact,
+      onCancelRemoveContact: this.doCancelRemoveContact 
     }
 
     return (

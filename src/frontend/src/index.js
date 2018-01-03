@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
+import 'antd/lib/style/index.css'
 import reducer from './reducers'
 import App from './containers/App';
 

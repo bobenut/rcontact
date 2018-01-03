@@ -7,6 +7,7 @@ import 'antd/lib/modal/style/index.css'
 import 'antd/lib/button/style/index.css'
 import ContactForm from './ContactForm'
 import * as actionThunks from '../thunks'
+import { filterContacts } from '../actions'
 
 class ContactsOpt extends Component {
   state = {
@@ -62,6 +63,13 @@ class ContactsOpt extends Component {
     
   }
 
+  doSearchByContactName = (e) => {
+    const { dispatch } = this.props
+    let action = filterContacts(e.target.value)
+    console.log('filter action: %s', JSON.stringify(action))
+    dispatch(action)
+  }
+
   render() {
     const { newContactModalVisible, savingNewContact } = this.state;
 
@@ -83,7 +91,7 @@ class ContactsOpt extends Component {
           ]}>
           <ContactForm ref="form"/>
         </Modal>
-        <input className='form-control' type='text' placeholder='search by name' style={{float:'right',width:'200px'}} />
+        <input className='form-control' type='text' placeholder='search by name' style={{float:'right',width:'200px'}} onInput={this.doSearchByContactName}/>
       </div>
     )
   }
